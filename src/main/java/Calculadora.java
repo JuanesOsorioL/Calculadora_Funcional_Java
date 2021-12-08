@@ -1,39 +1,41 @@
 import java.util.Scanner;
+import java.util.function.IntBinaryOperator;
 
 public class Calculadora {
 
     public static void main(String[] args) {
         Scanner input =new Scanner(System.in);
         Operaciones op= new Operaciones();
-        int numeroUno, numeroDos, control;
-        numeroUno=numeroDos=control=0;
+        int  control=1;
+        String menu="   Calculadora \n" +
+            "1. Suma\n" +
+            "2. Resta\n" +
+            "3. Multiplicacion\n" +
+            "4. Division\n" +
+            "0. Salir\n" +
+            "Ingrese la opcion que desea realizar: ";
 
-        do {
-            System.out.println("Calculadora");
-
-            System.out.print("Ingrese numero uno: ");
-            numeroUno=input.nextInt();
-            System.out.print("Ingrese numero dos: ");
-            numeroDos=input.nextInt();
-
-            System.out.print("1. Suma \n" +
-                    "2. Resta \n" +
-                    "3. Multiplicacion \n" +
-                    "4. Division \n" +
-                    "0. Salir \n" +
-                    "Ingrese la opcion que desea realizar: ");
+        while(control!=0){
+            System.out.println(menu);
             control=input.nextInt();
-
-
-
             switch (control){
-                case 1: System.out.println(op.suma.applyAsInt(numeroUno,numeroDos));break;
-                case 2: System.out.println(op.resta.applyAsInt(numeroUno,numeroDos));break;
-                case 3: System.out.println(op.multiplicacion.applyAsInt(numeroUno,numeroDos));break;
-                case 4: System.out.println(op.division.applyAsInt(numeroUno,numeroDos));break;
+                case 1: operacion(op.suma,input);break;
+                case 2: operacion(op.resta,input);break;
+                case 3: operacion(op.multiplicacion,input);break;
+                case 4: operacion(op.division,input);break;
                 default: System.out.println("opcion incorrecta ");
             }
-        }while(control!=0);
+        };
+    }
+
+    public static void operacion(IntBinaryOperator operacion, Scanner input){
+        System.out.println(
+        operacion.applyAsInt(pedirNumero("primer",input),pedirNumero("segundo",input)));
+    }
+
+    public static int pedirNumero(String numero, Scanner input){
+        System.out.print("Ingrese "+numero+" numero : ");
+        return input.nextInt();
     }
 
 }
